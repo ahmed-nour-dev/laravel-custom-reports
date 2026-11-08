@@ -1,0 +1,58 @@
+{
+    "name": "ahmednour/laravel-custom-reports",
+    "description": "An admin-defined report engine for Laravel: report types over your models, tabular / summary / matrix / joined reports, formulas, charts, background runs and schedules — with the app's own visibility, permissions and groups plugged in.",
+    "keywords": ["laravel", "reports", "report-builder", "custom-reports", "eloquent"],
+    "homepage": "https://github.com/ahmed-nour-dev/laravel-custom-reports",
+    "license": "proprietary",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ahmed Nour",
+            "email": "ahmednour1430464@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "barryvdh/laravel-dompdf": "^3.1",
+        "illuminate/contracts": "^13.0",
+        "illuminate/database": "^13.0",
+        "illuminate/notifications": "^13.0",
+        "illuminate/queue": "^13.0",
+        "illuminate/support": "^13.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.10",
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^11.0",
+        "phpunit/phpunit": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AhmedNour\\CustomReports\\": "src/",
+            "AhmedNour\\CustomReports\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AhmedNour\\CustomReports\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=1G"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AhmedNour\\CustomReports\\CustomReportsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
