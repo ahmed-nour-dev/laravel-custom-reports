@@ -1,5 +1,11 @@
 # laravel-custom-reports
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ahmednour/laravel-custom-reports.svg?style=flat-square)](https://packagist.org/packages/ahmednour/laravel-custom-reports)
+[![Total Downloads](https://img.shields.io/packagist/dt/ahmednour/laravel-custom-reports.svg?style=flat-square)](https://packagist.org/packages/ahmednour/laravel-custom-reports)
+[![Tests](https://img.shields.io/github/actions/workflow/status/ahmed-nour-dev/laravel-custom-reports/ci.yml?branch=main&label=tests&style=flat-square)](https://github.com/ahmed-nour-dev/laravel-custom-reports/actions/workflows/ci.yml)
+[![PHP Version](https://img.shields.io/badge/php-%5E8.3-777bb4.svg?style=flat-square)](composer.json)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+
 **A self-service report builder engine for Laravel.** Your admins design report types over
 your Eloquent models. Your users then build, save, schedule and share their own reports
 (tabular lists, grouped summaries, pivot matrices and side-by-side joined reports) with
