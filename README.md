@@ -32,6 +32,7 @@ $report = app(SaveReport::class)->handle($type, ReportDefinition::fromArray([
 - [API map](#api-map)
 - [Configuration](#configuration)
 - [Tests](#tests)
+- [License](#license)
 
 ## What it can do
 
@@ -377,3 +378,7 @@ Unit tests need no database. Feature tests need MySQL or MariaDB, which the suit
 fresh on every run. They run the engine on a small fixture app (`tests/Fixtures`: users,
 customers, orders) with its own visibility, Gate permissions and groups. CI runs the suite on
 PHP 8.3–8.5 against MySQL 8.4 and MariaDB 11.4.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
