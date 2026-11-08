@@ -3,7 +3,7 @@
     "description": "An admin-defined report engine for Laravel: report types over your models, tabular / summary / matrix / joined reports, formulas, charts, background runs and schedules — with the app's own visibility, permissions and groups plugged in.",
     "keywords": ["laravel", "reports", "report-builder", "custom-reports", "eloquent"],
     "homepage": "https://github.com/ahmed-nour-dev/laravel-custom-reports",
-    "license": "proprietary",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
