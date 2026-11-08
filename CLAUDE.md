@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`ahmednour/laravel-custom-reports`: a Laravel 13 package (PHP 8.3+) holding an admin-defined report engine. It ships Actions, Queries, models, migrations, a job and a PDF view only: **no routes, controllers or UI**. The host app's HTTP layer calls the Actions/Queries. The "ECC app" mentioned in docblocks and the README is the reference host app; it is not in this repo.
+`ahmednour/laravel-custom-reports`: a Laravel 13 package (PHP 8.3+) holding an admin-defined report engine. It ships Actions, Queries, models, migrations, a job and a PDF view only: **no routes, controllers or UI**. The host app's HTTP layer calls the Actions/Queries. The "ECC app" mentioned in docblocks is the original host app the engine was extracted from; it is not in this repo.
 
 Docblocks cite `SPEC §x.y`. The spec is not in this repo, so treat the docblocks themselves as the spec.
 
