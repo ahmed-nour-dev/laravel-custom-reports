@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`ahmednour/laravel-custom-reports`: a Laravel 13 package (PHP 8.3+) holding an admin-defined report engine. It ships Actions, Queries, models, migrations, a job and a PDF view only: **no routes, controllers or UI**. The host app's HTTP layer calls the Actions/Queries. The "ECC app" mentioned in docblocks is the original host app the engine was extracted from; it is not in this repo.
+`ahmednour/laravel-custom-reports`: a Laravel package (Laravel 10–13, PHP 8.3+) holding an admin-defined report engine. It ships Actions, Queries, models, migrations, a job and a PDF view only: **no routes, controllers or UI**. The host app's HTTP layer calls the Actions/Queries. The "ECC app" mentioned in docblocks is the original host app the engine was extracted from; it is not in this repo.
 
 Docblocks cite `SPEC §x.y`. The spec is not in this repo, so treat the docblocks themselves as the spec.
 
@@ -24,7 +24,8 @@ vendor/bin/phpunit --filter test_name_here
 - **Unit tests** (`tests/Unit`) extend `PHPUnit\Framework\TestCase` and need no database.
 - **Feature tests** (`tests/Feature`, built on `tests/TestCase.php`, Orchestra Testbench) need a real MySQL 8 or MariaDB. SQLite is not supported because the engine uses MySQL SQL (statement time limits, date buckets, `DATEDIFF`). Set `DB_CONNECTION` (`mysql`/`mariadb`), `DB_HOST`, `DB_PORT`, `DB_DATABASE` (default `custom_reports_testing`), `DB_USERNAME` and `DB_PASSWORD`. The suite uses `RefreshDatabase`.
 - Feature tests run against a small fixture app in `tests/Fixtures` (User, Customer, Order, their `ReportableSource`s, `OwnerVisibility`, `FixedAudience`, and its own migrations).
-- CI (`.github/workflows/ci.yml`) runs the tests on PHP 8.3/8.4/8.5 with MySQL 8.4, plus PHP 8.5 with MariaDB 11.4, and runs Pint and PHPStan.
+- CI (`.github/workflows/ci.yml`) runs the tests on Laravel 10–13 × PHP 8.3/8.4/8.5 (skipping pairs Laravel does not support: 10 on 8.4+, 11 on 8.5) with MySQL 8.4, plus Laravel 13 on PHP 8.5 with MariaDB 11.4, and runs Pint and PHPStan (on Laravel 13).
+- **Supporting Laravel 10–13:** do not use framework APIs newer than Laravel 10 in `src/` or `tests/` without a fallback. Examples: `#[UseFactory]` (12+, so models override `newFactory()` instead), `casts()` methods (11+, use `$casts`), the `Exceptions` facade (11+), and the `mariadb` driver name (11+; detect MariaDB with `MySqlConnection::isMaria()`).
 
 ## Architecture
 

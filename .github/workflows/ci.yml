@@ -11,16 +11,23 @@ concurrency:
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php }} · ${{ matrix.db.name }}
+    name: Laravel ${{ matrix.laravel }} · PHP ${{ matrix.php }} · ${{ matrix.db.name }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        laravel: ['10', '11', '12', '13']
         php: ['8.3', '8.4', '8.5']
         db:
           - { name: 'MySQL 8.4', image: 'mysql:8.4', connection: mysql }
+        exclude:
+          # PHP versions those Laravel releases do not support.
+          - { laravel: '10', php: '8.4' }
+          - { laravel: '10', php: '8.5' }
+          - { laravel: '11', php: '8.5' }
         include:
-          - php: '8.5'
+          - laravel: '13'
+            php: '8.5'
             db: { name: 'MariaDB 11.4', image: 'mariadb:11.4', connection: mariadb }
 
     services:
@@ -60,11 +67,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
-          key: composer-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-          restore-keys: composer-${{ matrix.php }}-
+          key: composer-${{ matrix.php }}-l${{ matrix.laravel }}-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ matrix.php }}-l${{ matrix.laravel }}-
 
       - name: Install dependencies
-        run: composer update --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-dist --no-interaction --no-progress --with-all-dependencies --with "laravel/framework:^${{ matrix.laravel }}.0"
+        env:
+          # Laravel 10 and 11 are end-of-life and every release has open advisories, which
+          # Composer 2.9+ refuses to install. Allow them for those rows only, to test them.
+          COMPOSER_NO_SECURITY_BLOCKING: ${{ (matrix.laravel == '10' || matrix.laravel == '11') && '1' || '' }}
 
       - name: Run tests
         run: vendor/bin/phpunit

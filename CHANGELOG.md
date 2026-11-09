@@ -6,6 +6,10 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Support for Laravel 10, 11 and 12, alongside 13. Models now name their factory with `newFactory()` instead of the Laravel 12+ `#[UseFactory]` attribute.
+
 ### Fixed
 
 - `SendDueReportSubscriptions` sends each scheduled occurrence at most once ([#3](https://github.com/ahmed-nour-dev/laravel-custom-reports/issues/3)):

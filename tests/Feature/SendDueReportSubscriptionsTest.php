@@ -22,9 +22,10 @@ use AhmedNour\CustomReports\Models\ReportType;
 use AhmedNour\CustomReports\Tests\Fixtures\User;
 use AhmedNour\CustomReports\Tests\TestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Exceptions;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Queue;
+use Mockery;
 use RuntimeException;
 
 /**
@@ -97,7 +98,8 @@ final class SendDueReportSubscriptionsTest extends TestCase
 
     public function test_an_unexpected_error_is_reported_without_a_resend_or_blocking_the_rest(): void
     {
-        Exceptions::fake();
+        // A spy rather than Exceptions::fake(), which needs Laravel 11+.
+        $handler = $this->spy(ExceptionHandler::class);
         $this->app->instance(ReportAudience::class, $this->audienceFailingAt($this->bob));
 
         // Alice is queued, then the app's audience throws on Bob.
@@ -106,7 +108,7 @@ final class SendDueReportSubscriptionsTest extends TestCase
 
         $this->assertSame(2, app(SendDueReportSubscriptions::class)->handle());
 
-        Exceptions::assertReported(RuntimeException::class);
+        $handler->shouldHaveReceived('report')->with(Mockery::type(RuntimeException::class))->atLeast()->once();
         $this->assertSame(1, ReportRun::query()->where('report_subscription_id', $broken->id)->count());
         $this->assertSame(1, ReportRun::query()->where('report_subscription_id', $later->id)->count());
         $this->assertTrue($broken->refresh()->next_run_at?->isFuture());

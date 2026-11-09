@@ -4,6 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/ahmednour/laravel-custom-reports.svg?style=flat-square)](https://packagist.org/packages/ahmednour/laravel-custom-reports)
 [![Tests](https://img.shields.io/github/actions/workflow/status/ahmed-nour-dev/laravel-custom-reports/ci.yml?branch=main&label=tests&style=flat-square)](https://github.com/ahmed-nour-dev/laravel-custom-reports/actions/workflows/ci.yml)
 [![PHP Version](https://img.shields.io/badge/php-%5E8.3-777bb4.svg?style=flat-square)](composer.json)
+[![Laravel Version](https://img.shields.io/badge/laravel-10%20%7C%2011%20%7C%2012%20%7C%2013-ff2d20.svg?style=flat-square)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
 **A self-service report builder engine for Laravel.** Your admins design report types over
@@ -91,7 +92,7 @@ A report builder hands users a query language, so the engine is strict:
 
 ## Install
 
-Requires PHP 8.3+, Laravel 13, and MySQL 8 or MariaDB (the engine uses their SQL for
+Requires PHP 8.3+, Laravel 10, 11, 12 or 13, and MySQL 8 or MariaDB (the engine uses their SQL for
 statement time limits, date buckets and `DATEDIFF`).
 
 ```bash
@@ -393,7 +394,7 @@ vendor/bin/pint --test
 Unit tests need no database. Feature tests need MySQL or MariaDB, which the suite migrates
 fresh on every run. They run the engine on a small fixture app (`tests/Fixtures`: users,
 customers, orders) with its own visibility, Gate permissions and groups. CI runs the suite on
-PHP 8.3–8.5 against MySQL 8.4 and MariaDB 11.4.
+Laravel 10–13 across the PHP versions each supports (8.3–8.5), against MySQL 8.4 and MariaDB 11.4.
 
 ## License
 

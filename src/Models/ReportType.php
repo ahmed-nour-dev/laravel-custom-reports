@@ -7,7 +7,6 @@ namespace AhmedNour\CustomReports\Models;
 use AhmedNour\CustomReports\Database\Factories\ReportTypeFactory;
 use AhmedNour\CustomReports\Enums\ReportTypeStatus;
 use AhmedNour\CustomReports\Support\Users;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,11 +33,16 @@ use Illuminate\Support\Carbon;
  * @property list<string>|null $known_fields primary-object field names as of the last auto-add sync
  * @property string|null $last_used_at only when loaded with withMax (ReportTypePicker)
  */
-#[UseFactory(ReportTypeFactory::class)]
 class ReportType extends Model
 {
     /** @use HasFactory<ReportTypeFactory> */
     use HasFactory, SoftDeletes;
+
+    /** Package models live outside the app namespace, so name the factory explicitly. */
+    protected static function newFactory(): ReportTypeFactory
+    {
+        return ReportTypeFactory::new();
+    }
 
     protected $fillable = [
         'code', 'key', 'name', 'description', 'category', 'status', 'primary_source',
