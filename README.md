@@ -323,9 +323,19 @@ skipped, and a tabular report goes out as a CSV export, only to recipients allow
 Two Actions need calling from your scheduler, directly or through commands of your own:
 
 ```php
-Schedule::call(fn () => app(\AhmedNour\CustomReports\Actions\SendDueReportSubscriptions::class)->handle())->everyMinute();
+Schedule::call(fn () => app(\AhmedNour\CustomReports\Actions\SendDueReportSubscriptions::class)->handle())
+    ->name('custom-reports:send-subscriptions')
+    ->everyMinute()
+    ->withoutOverlapping()
+    ->onOneServer();
 Schedule::call(fn () => app(\AhmedNour\CustomReports\Actions\PurgeReportRuns::class)->handle())->hourly();
 ```
+
+Each scheduled send goes out at most once: `SendDueReportSubscriptions` claims a due
+schedule before sending it, so overlapping or retried calls never email a recipient twice,
+and an error partway through a send is reported, not retried on the next tick.
+`withoutOverlapping()` and `onOneServer()` (which needs a shared cache, such as Redis or the
+database) are still recommended so a slow tick and the next one don't do the same work.
 
 ## Folders, sharing and dashboards
 
