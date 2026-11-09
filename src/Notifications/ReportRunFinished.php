@@ -18,6 +18,9 @@ use Illuminate\Notifications\Notification;
  * bell and the notifications page render it alike; it links by run code.
  * A run a scheduled send queued is also emailed when done — a link, never
  * rows (SPEC §14.5).
+ *
+ * It is queued on `custom-reports.queue`, like the run itself, so a worker
+ * already set up for background runs sends it too.
  */
 class ReportRunFinished extends Notification implements ShouldQueue
 {
@@ -26,6 +29,7 @@ class ReportRunFinished extends Notification implements ShouldQueue
     public function __construct(public ReportRun $run)
     {
         $this->afterCommit();
+        $this->onQueue((string) config('custom-reports.queue', 'reports'));
     }
 
     /**

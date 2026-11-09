@@ -6,6 +6,14 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-09
+
+Upgrading from 0.2.0 needs no code changes.
+
+### Fixed
+
+- The `ReportRunFinished` notification is queued on `custom-reports.queue`, like the background run it reports on. It used the connection's default queue, so in an app whose workers listen only to the report queue, users never got the "run finished" notification, and scheduled sends never emailed anyone.
+
 ## [0.2.0] - 2026-11-09
 
 Upgrading from 0.1.1 needs no code changes.
@@ -87,7 +95,8 @@ Laravel 13 package (PHP 8.3+, MySQL 8 or MariaDB).
 - **Guardrails**: statement time limits on MySQL and MariaDB, and configurable caps on columns, filters, matrix cells, detail rows and export rows.
 - `ReportException`, the base of every engine failure, with an HTTP status, a stable error code and context.
 
-[Unreleased]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ahmed-nour-dev/laravel-custom-reports/releases/tag/v0.1.0

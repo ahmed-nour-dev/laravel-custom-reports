@@ -46,7 +46,7 @@ return [
     // The disk background results are written to.
     'disk' => 'local',
 
-    // The queue background runs go to.
+    // The queue background runs, and their "finished" notifications, go to.
     'queue' => env('REPORTS_CUSTOM_QUEUE', 'reports'),
 
     // Fields an admin may expose on one report type (layout editor cap).

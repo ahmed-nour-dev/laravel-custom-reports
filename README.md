@@ -102,7 +102,7 @@ php artisan migrate
 ```
 
 The service provider is auto-discovered, so there is nothing to register. Background runs go
-to the `reports` queue, so run a worker on it: `php artisan queue:work --queue=reports,default`.
+to the `reports` queue (`custom-reports.queue`), and so do the notifications that tell users a run finished, so run a worker on it: `php artisan queue:work --queue=reports,default`.
 
 ## Quick start
 
@@ -314,7 +314,7 @@ Both are blank-safe: division by zero gives a blank, not an error.
 
 - **`QueueReportRun`** queues a run, a CSV export or a PDF export of a saved report for a viewer. It reuses that viewer's unfinished or unexpired run of the same definition instead of queuing a duplicate.
 - **`RunCustomReportJob`** runs on the `reports` queue with the longer `background_max_execution_ms` limit and writes `report-runs/{code}.{ext}` to the configured disk.
-- **`ReportRunFinished`** notifies the viewer whether the run worked or not (database and broadcast, plus mail for a finished scheduled send), linking to `run_link`.
+- **`ReportRunFinished`** notifies the viewer whether the run worked or not (database and broadcast, plus mail for a finished scheduled send), linking to `run_link`. It is queued on `custom-reports.queue`, like the run.
 - **`ReportRunAccess`** guards status checks and downloads.
 - **Exports** (`ExportCustomReport`, `ExportJoinedReport`) return an `ExportResult`. Streamed CSV cells are escaped against formula injection. `ReportPdfExporter` renders the PDF; publish the `custom-reports::export-pdf` view with `--tag=custom-reports-views` to restyle it.
 - **Schedules**: `SaveReportSubscription` sets a daily, weekly or monthly send at a time, to groups and users. Each recipient gets their own fresh run, with their own visibility, and
@@ -373,7 +373,7 @@ Resolve them from the container (`app(SaveReport::class)`) or inject them.
   - `abilities`: the Gate abilities the default permissions check
   - `migrations`: set it to `false` if you publish the migrations (`--tag=custom-reports-migrations`) or already have the tables
   - `run_link`: where a finished background run opens in your app (`{code}` is the run's `RRN-####` code)
-  - `disk` and `queue`: where background results are stored, and which queue runs them
+  - `disk` and `queue`: where background results are stored, and which queue runs them and sends their notifications
 - **Guardrails**
   - `max_fields`, `max_columns`, `max_filters`, `max_cross_filters`
   - `max_matrix_cells`, `max_detail_rows` (hitting a cap marks the result as truncated)
