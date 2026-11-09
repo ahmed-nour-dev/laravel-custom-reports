@@ -25,17 +25,17 @@ final class ReportRunFinishedTest extends TestCase
         Queue::fake();
 
         $viewer = User::query()->create(['name' => 'Alice', 'email' => 'alice@example.test']);
-        $viewer->notify(new ReportRunFinished($this->run()));
+        $viewer->notify(new ReportRunFinished($this->finishedRun()));
 
         Queue::assertPushedOn('report-jobs', SendQueuedNotifications::class);
     }
 
     public function test_it_uses_the_package_default_queue_when_not_configured(): void
     {
-        $this->assertSame('reports', (new ReportRunFinished($this->run()))->queue);
+        $this->assertSame('reports', (new ReportRunFinished($this->finishedRun()))->queue);
     }
 
-    private function run(): ReportRun
+    private function finishedRun(): ReportRun
     {
         return (new ReportRun)->forceFill(['code' => 'RRN-0001', 'status' => ReportRunStatus::DONE]);
     }
