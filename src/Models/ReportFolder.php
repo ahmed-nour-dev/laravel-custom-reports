@@ -6,7 +6,6 @@ namespace AhmedNour\CustomReports\Models;
 
 use AhmedNour\CustomReports\Database\Factories\ReportFolderFactory;
 use AhmedNour\CustomReports\Support\Users;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,11 +21,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property int|null $owner_id
  */
-#[UseFactory(ReportFolderFactory::class)]
 class ReportFolder extends Model
 {
     /** @use HasFactory<ReportFolderFactory> */
     use HasFactory;
+
+    /** Package models live outside the app namespace, so name the factory explicitly. */
+    protected static function newFactory(): ReportFolderFactory
+    {
+        return ReportFolderFactory::new();
+    }
 
     protected $fillable = ['code', 'name', 'owner_id'];
 

@@ -6,7 +6,6 @@ namespace AhmedNour\CustomReports\Models;
 
 use AhmedNour\CustomReports\Database\Factories\ReportTypeObjectFactory;
 use AhmedNour\CustomReports\Enums\JoinType;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,11 +22,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $parent_link
  * @property JoinType $join_type
  */
-#[UseFactory(ReportTypeObjectFactory::class)]
 class ReportTypeObject extends Model
 {
     /** @use HasFactory<ReportTypeObjectFactory> */
     use HasFactory;
+
+    /** Package models live outside the app namespace, so name the factory explicitly. */
+    protected static function newFactory(): ReportTypeObjectFactory
+    {
+        return ReportTypeObjectFactory::new();
+    }
 
     protected $fillable = ['report_type_id', 'level', 'source', 'parent_link', 'join_type'];
 

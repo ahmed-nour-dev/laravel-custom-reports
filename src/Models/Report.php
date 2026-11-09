@@ -9,7 +9,6 @@ use AhmedNour\CustomReports\Data\ReportDefinition;
 use AhmedNour\CustomReports\Database\Factories\ReportFactory;
 use AhmedNour\CustomReports\Enums\ReportFormat;
 use AhmedNour\CustomReports\Support\Users;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,11 +30,16 @@ use Illuminate\Support\Carbon;
  * @property int|null $owner_id
  * @property Carbon|null $last_run_at
  */
-#[UseFactory(ReportFactory::class)]
 class Report extends Model
 {
     /** @use HasFactory<ReportFactory> */
     use HasFactory, SoftDeletes;
+
+    /** Package models live outside the app namespace, so name the factory explicitly. */
+    protected static function newFactory(): ReportFactory
+    {
+        return ReportFactory::new();
+    }
 
     protected $fillable = [
         'code', 'report_type_id', 'report_folder_id', 'name', 'description', 'format', 'definition', 'owner_id', 'last_run_at',
