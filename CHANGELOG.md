@@ -6,9 +6,14 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-09
+
+Upgrading from 0.1.1 needs no code changes.
+
 ### Added
 
-- Support for Laravel 10, 11 and 12, alongside 13. Models now name their factory with `newFactory()` instead of the Laravel 12+ `#[UseFactory]` attribute.
+- Support for Laravel 10, 11 and 12, alongside 13 ([#10](https://github.com/ahmed-nour-dev/laravel-custom-reports/pull/10)). Models now name their factory with `newFactory()` instead of the Laravel 12+ `#[UseFactory]` attribute.
+  - Laravel 10 and 11 are end-of-life, and Composer 2.9+ refuses to install their releases because of open security advisories. Apps still on them may need to allow that in Composer; it comes from the framework version, not from this package.
 
 ### Fixed
 
@@ -21,6 +26,7 @@ All notable changes to this package are documented here. The format follows
 ### Changed
 
 - The README's scheduler example adds `withoutOverlapping()` and `onOneServer()`.
+- CI runs the test suite on Laravel 10–13, each on the PHP versions it supports.
 
 ## [0.1.1] - 2026-11-08
 
@@ -81,6 +87,7 @@ Laravel 13 package (PHP 8.3+, MySQL 8 or MariaDB).
 - **Guardrails**: statement time limits on MySQL and MariaDB, and configurable caps on columns, filters, matrix cells, detail rows and export rows.
 - `ReportException`, the base of every engine failure, with an HTTP status, a stable error code and context.
 
-[Unreleased]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/ahmed-nour-dev/laravel-custom-reports/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ahmed-nour-dev/laravel-custom-reports/releases/tag/v0.1.0
