@@ -6,6 +6,18 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `SendDueReportSubscriptions` sends each scheduled occurrence at most once ([#3](https://github.com/ahmed-nour-dev/laravel-custom-reports/issues/3)):
+  - it claims a due schedule (moves `next_run_at` on, only if no one else has) before sending, so two overlapping scheduler runs no longer both send it;
+  - an unexpected error partway through the recipients is reported instead of making the next tick send the earlier recipients again, every minute;
+  - an error on one schedule no longer stops the schedules after it;
+  - due schedules are paged by id, so a large batch no longer skips rows as they stop being due.
+
+### Changed
+
+- The README's scheduler example adds `withoutOverlapping()` and `onOneServer()`.
+
 ## [0.1.1] - 2026-11-08
 
 No engine changes. Upgrading from 0.1.0 needs no code changes.
